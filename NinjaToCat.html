@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ninjas</title>
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $('img').hover(function() 
+            {   
+                /*   
+                    This function changes the image of the current image being hovered over to an alternate image. 
+                    It does so only when the status of the image isnt clicked. When the image is clicked it will become
+                    the new still image and when we hover over, it wont change. When the image is clicked again it will
+                    go into a nor status in which the image will change to the new image immediately but not change again 
+                    when we hover away. The nor status will then change the clicked status to false so that next time
+                    we hover over it can show the transition from image to image.
+                */
+                var clicked_status = $(this).attr('data-clicked'); 
+                if(clicked_status == 'false')
+                {
+                    var swap = $(this).attr('src');
+                    $(this).attr('src', $(this).attr('data-alt-src'));
+                    $(this).attr('data-alt-src', swap);
+                }
+                else if(clicked_status == 'nor')
+                {
+                    $(this).attr('data-clicked','false');
+                }
+                //if clicked status == true do nothing
+                //because we dont want to change to the alt-src
+            
+            })
+            $('img').click(function()
+            {
+                /*
+                    This function allows the image that is being clicked on to remain as the new image 
+                    even after being hovered over.After it is clicked a second time it changes immediately 
+                    to the previous image and goes into a nor status. This nor status helps so that when
+                    hovering away the image doesnt revert back to the image that we had just changed.
+                */
+                if($(this).attr('data-clicked') == 'true')
+                {
+                    $(this).attr('data-clicked','nor');
+                    var swap = $(this).attr('src');
+                    $(this).attr('src', $(this).attr('data-alt-src'));
+                    $(this).attr('data-alt-src', swap);
+                }
+                else
+                {
+                    $(this).attr('data-clicked','true');
+                }   
+
+            })
+            $(function() {
+                $( "#sortable" ).sortable();
+                $( "#sortable" ).disableSelection();
+            } );
+        });
+        
+    </script>
+    <style>
+        body 
+        {
+            background-image: url('images/webb-dark.png');
+        }
+        img
+        {
+            display: block;
+            margin: 5px;
+        }
+        li 
+        {
+            list-style-type: none;
+        }
+        ul 
+        {
+            padding:0px;
+        }
+        h1
+        {
+            color:teal;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class ="container vh-100 bg-dark">
+        <center>
+            <br>
+            <br>
+            <h1>Ninja to Cat</h1>
+            <br>
+            <img src='images/ninja0.png' data-alt-src='images/cat0.png' data-clicked='false'/>
+            <img src='images/ninja1.png' data-alt-src='images/cat1.png' data-clicked='false'/>
+            <img src='images/ninja2.png' data-alt-src='images/cat2.png' data-clicked='false'/>
+            <img src='images/ninja3.png' data-alt-src='images/cat3.png' data-clicked='false'/>
+            <img src='images/ninja4.png' data-alt-src='images/cat4.png' data-clicked='false'/>
+        </center>
+        <center>
+            <br>
+            <br>
+            <h1>Sort Ninja</h1>
+            <br>
+            <ul id="sortable">
+                <li><img src='images/ninja1.png'/></li>
+                <li><img src='images/ninja4.png'/></li>
+                <li><img src='images/ninja2.png'/></li>
+                <li><img src='images/ninja0.png'/></li>
+                <li><img src='images/ninja3.png'/></li>
+            </ul>
+        </center>
+    </div>
+
+</body>
+</html>s
